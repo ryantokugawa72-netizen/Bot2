@@ -1,6 +1,7 @@
 import time
 import requests
 from web3 import Web3
+import os
 
 print("=============================================")
 print(" 📡 RADAR TELEGRAM: PANTAU BRANKAS MOLTZ 📡")
@@ -11,9 +12,9 @@ RPC_URL = "https://mainnet.crosstoken.io:22001"
 PROXY_ADDRESS = "0x7467d9a43Da2ebAeA018fab1f0A8777463668A9d"
 TOKEN_ADDRESS = "0xdb99a97d607c5c5831263707E7b746312406ba7E"
 
-# ⚠️ KUNCI TELEGRAM BOS ⚠️
-BOT_TOKEN = "8313711228:AAE1RCkASD8fY6Gyty98Uxcm8fXCtwaXCxY"
-CHAT_ID = "1338856233"
+# 🔒 Sekarang kita ambil kunci dari 'brankas' Railway, bukan nulis manual
+BOT_TOKEN = os.environ.get("TELE_BOT_TOKEN")
+CHAT_ID = os.environ.get("TELE_CHAT_ID")
 
 CEK_INTERVAL = 60 # Cek brankas setiap 60 detik
 # ===============================================
@@ -81,3 +82,4 @@ while True:
         print(f"Lagi ngelag... santai dulu.")
 
     time.sleep(CEK_INTERVAL)
+
