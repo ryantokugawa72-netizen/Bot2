@@ -13,8 +13,8 @@ RUN npm install -g pm2
 WORKDIR /app
 COPY . /app
 
-# 5. Install library Python (requests)
+# 5. Install library Python (requests & web3)
 RUN pip install -r requirements.txt
 
-# 6. MANTRA SAKTI: Jalanin 10 bot pakai PM2 supaya server Railway gak mati
+# 6. MANTRA SAKTI: Jalanin bot & radar pakai PM2
 CMD ["pm2-runtime", "ecosystem.config.js"]
