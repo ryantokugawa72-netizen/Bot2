@@ -2,14 +2,6 @@ module.exports = {
   apps: [
     { 
       name: "Tuyul-3", script: "bot.py", interpreter: "python3",
-      env: { BOT_NAME: "peaxel5", API_KEY: "mr_live_qS9FQmELIfLOF8ZTxAQNh0EVOPTKkBta" }
-    },
-    { 
-      name: "Tuyul-3", script: "bot.py", interpreter: "python3",
-      env: { BOT_NAME: "peaxel6", API_KEY: "mr_live_xysPJejffFUcpkmC_XoizRe-nmi_9NMX" }
-    },
-    { 
-      name: "Tuyul-3", script: "bot.py", interpreter: "python3",
       env: { BOT_NAME: "peaxel7", API_KEY: "mr_live_HIO4r0hedXU8f8RDZsHWjMwKDdBHRiMc" }
     },
     { 
@@ -25,3 +17,4 @@ module.exports = {
   ]
 
 };
+
