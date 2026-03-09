@@ -12,9 +12,15 @@ module.exports = {
       name: "Tuyul-3", script: "bot.py", interpreter: "python3",
       env: { BOT_NAME: "peaxel9", API_KEY: "mr_live_ojydX_TbwQ45eMM5LoQqX7YMh9QKE2gb" }
     },
+    {
+      name: "Radar-Telegram",
+      script: "radar_tele.py",
+      interpreter: "python3"
+    }
     // ... DAN SETERUSNYA SAMPAI BOT KE-15 ...
     // Tinggal copy-paste blok di atas ke bawah
   ]
 
 };
+
 
