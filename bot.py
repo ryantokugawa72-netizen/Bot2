@@ -18,7 +18,8 @@ HEADERS = {
     "X-API-Key": API_KEY
 }
 
-TURN_DELAY = 60  
+# 🔥 UPDATE DARI PREMIUM: Naik ke 62 detik biar gak diblokir anti-spam Dev!
+TURN_DELAY = 62  
 
 # ================== SISTEM MEMORI (RECONNECT) ==================
 safe_bot_name = re.sub(r'[^a-zA-Z0-9_]', '', BOT_NAME)
@@ -63,13 +64,13 @@ def smart_print(bot_memory, text):
 
 # ================== API HANDLERS ==================
 def get_waiting_game():
-    MAX_PERCOBAAN = 5 # 🚀 Percobaan ditambah biar lebih ngotot
+    MAX_PERCOBAAN = 5 
     print(f"🔍 [{get_waktu()}] [{BOT_NAME}] Radar SNIPER Aktif! Mencari room GRATIS...")
     url = f"{BASE_URL}/games?status=waiting"
     
     for attempt in range(1, MAX_PERCOBAAN + 1):
         try:
-            response = requests.get(url, timeout=5) # 🚀 Timeout dicepetin
+            response = requests.get(url, timeout=5) 
             res = response.json()
             
             if res.get("success") and res.get("data"):
@@ -78,13 +79,12 @@ def get_waiting_game():
                     entry_type = game.get("entryType", "").lower()
                     
                     if status_game == "waiting" and entry_type != "paid":
-                        print(f"✅ [{get_waktu()}] [{BOT_NAME}] Nemu Room: {game.get('name')}")
+                        print(f"✅ [{get_waktu()}] [{BOT_NAME}] Nemu Room Gratis: {game.get('name')}")
                         return game["id"]
         except Exception as e:
             pass
             
         if attempt < MAX_PERCOBAAN:
-            # 🔥 JEDA SUPER SINGKAT (0.2 - 0.7 Detik) 🔥
             delay = random.uniform(0.2, 0.7) 
             time.sleep(delay) 
             
@@ -215,7 +215,6 @@ def cari_pintu_strategis(pintu_aman, region_dict, hp_sekarat):
     if not hp_sekarat and len(ruins) > 0: return random.choice(ruins)
     return random.choice(pintu_aman)
 
-# 🔥 FUNGSI PEMBUNGKUS THOUGHT (ENGLISH VERSION) 🔥
 def bungkus_aksi(aksi_dict, reasoning="Securing the perimeter.", planned="Surviving for the Peaxel Cartel."):
     return {
         "action": aksi_dict,
@@ -376,7 +375,7 @@ def decide_action(state, bot_memory):
     barang_di_area = cari_barang_di_tanah(state, region)
     barang_di_area.sort(key=sort_loot_priority, reverse=True)
 
-    # ================== KOMUNIKASI MAFIA (ENGLISH MODE) ==================
+    # ================== KOMUNIKASI MAFIA ==================
     if jumlah_pengeroyok > 0 and bot_memory.get("last_talk_region") != current_region_id:
         bot_memory["last_talk_region"] = current_region_id
         bacotan = random.choice([
@@ -396,7 +395,7 @@ def decide_action(state, bot_memory):
             smart_print(bot_memory, f"[{BOT_NAME}] 📻 HT ke {teman_target.get('name')}: {pesan}")
             return bungkus_aksi({"type": "whisper", "targetId": teman_target.get("id"), "message": pesan}, "Critical situation.", "Requesting backup from the Cartel family.")
 
-    # ================== DAFTAR FUNGSI AKSI (ENGLISH THOUGHTS) ==================
+    # ================== DAFTAR FUNGSI AKSI ==================
     def aksi_move(pesan_kustom="🚪 Melipir cari aman...", wajib_aman=False, target_pasti=None, reasoning="Tactical repositioning.", planned="Seeking a tactical advantage."):
         if my_ep_val < 1: 
             smart_print(bot_memory, f"[{BOT_NAME}] 💤 EP Habis! Terpaksa tidur dulu (Rest)!")
@@ -404,7 +403,8 @@ def decide_action(state, bot_memory):
             
         if target_pasti and target_pasti in adjacent_ids:
             smart_print(bot_memory, f"[{BOT_NAME}] 🏃 {pesan_kustom}")
-            return bungkus_aksi({"type": "move", "regionId": target_pasti}, reasoning, planned)
+            # 🔥 UPDATE: Ubah regionId jadi target
+            return bungkus_aksi({"type": "move", "target": target_pasti}, reasoning, planned)
 
         if not adjacent_regions: return None 
             
@@ -453,7 +453,8 @@ def decide_action(state, bot_memory):
             bot_memory["visited_path"].append(target_id)
             if len(bot_memory["visited_path"]) > 20: 
                 bot_memory["visited_path"].pop(0)
-            return bungkus_aksi({"type": "move", "regionId": target_id}, reasoning, planned)
+            # 🔥 UPDATE: Ubah regionId jadi target
+            return bungkus_aksi({"type": "move", "target": target_id}, reasoning, planned)
             
         return None 
         
@@ -461,7 +462,8 @@ def decide_action(state, bot_memory):
         if my_ep_val < 2:
             smart_print(bot_memory, f"[{BOT_NAME}] 💤 EP cuma {my_ep_val}! Istirahat (Rest) ambil napas buat nyerang!")
             return bungkus_aksi({"type": "rest"}, "Out of breath before execution.", "Catching breath for a lethal strike.")
-        return bungkus_aksi({"type": "attack", "targetId": target_id, "targetType": target_type}, reasoning, planned)
+        # 🔥 UPDATE: Ubah targetId jadi target
+        return bungkus_aksi({"type": "attack", "target": target_id}, reasoning, planned)
 
     def aksi_pungut(item_data, reasoning="Valuable loot detected.", planned="Securing assets for the win."): 
         item_id, _ = ekstrak_info_item(item_data)
@@ -489,7 +491,6 @@ def decide_action(state, bot_memory):
             smart_print(bot_memory, f"[{BOT_NAME}] ✨ UPGRADE SENJATA! Pakai [{best_inv_w_name}]!")
             return aksi_equip(best_inv_w_id)
 
-    # 🔥 AUTO-CLEAN (SMART INVENTORY) ANTI LOAK 🔥
     skor_maksimal_kita = max(equipped_w_score, best_inv_w_score)
     for item in inventory:
         is_eq = isinstance(item, dict) and item.get("isEquipped", False)
@@ -499,7 +500,6 @@ def decide_action(state, bot_memory):
             
             if is_valid_weapon(i_name, item):
                 skor_tas = get_weapon_score(i_name)
-                # Kalau senjata di tas skornya SAMA atau LEBIH RENDAH dari senjata di tangan, BUANG!
                 if skor_tas <= skor_maksimal_kita:
                     bot_memory["sampah_memory"].add(i_id) 
                     return aksi_buang(i_id, f"AUTO-CLEAN: Buang {i_name} usang!")
@@ -542,7 +542,6 @@ def decide_action(state, bot_memory):
             if "radio" in nm_low and punya_radio: continue
             if "map" in nm_low and punya_map: continue
                 
-            # 🔥 ANTI RAKUS SENJATA 🔥
             if is_valid_weapon(nama_barang, item_terbaik):
                 skor_barang_ini = get_weapon_score(nama_barang)
                 if skor_barang_ini <= skor_maksimal_kita:
@@ -759,7 +758,6 @@ def main():
             game_id = get_waiting_game()
             
             if not game_id:
-                # 🔥 Kalau room habis, tunggu bentar aja (0.5 - 1.2 detik) langsung refresh! 🔥
                 delay = random.uniform(0.5, 1.2)
                 print(f"🔄 [{BOT_NAME}] Re-scan radar cepat dalam {delay:.1f} detik...\n")
                 time.sleep(delay)
@@ -768,7 +766,6 @@ def main():
             agent_id = register_agent(game_id)
             
             if not agent_id:
-                # 🔥 Kalau keduluan bot lain, LANGSUNG HAJAR DETIK ITU JUGA (0.1 - 0.3 detik)! 🔥
                 delay = random.uniform(0.1, 0.3)
                 print(f"⏩ [{BOT_NAME}] Keduluan! Langsung serobot room lain ({delay:.1f}s)....\n")
                 time.sleep(delay)
@@ -852,7 +849,6 @@ def main():
                 res = send_action(game_id, agent_id, action_payload)
                 
                 if res and res.get("success"):
-                    # NOTE: "rest" punya Cooldown 1 menit jadi tidak masuk fast-track
                     if act_type in ["pickup", "equip", "talk", "whisper", "drop"]: 
                         time.sleep(0.2) 
                     else: 
