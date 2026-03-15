@@ -9,7 +9,7 @@ print("=============================================")
 
 # ================= KONFIGURASI =================
 RPC_URL = "https://mainnet.crosstoken.io:22001"
-PROXY_ADDRESS = "0x7467d9a43Da2ebAeA018fab1f0A8777463668A9d"
+PROXY_ADDRESS = "0x1Eac541A95FD11f5d27848311d59e3B027427c02"
 TOKEN_ADDRESS = "0xdb99a97d607c5c5831263707E7b746312406ba7E"
 
 # 🔒 Sekarang kita ambil kunci dari 'brankas' Railway, bukan nulis manual
@@ -64,7 +64,7 @@ while True:
         elif saldo_sekarang > saldo_terakhir:
             cuan = saldo_sekarang - saldo_terakhir
             pesan = (
-                f"🎉🎉 BOOYAH! TUYUL WIN! 🎉🎉\n\n"
+                f"🎉🎉 GG! BOT WIN! 🎉🎉\n\n"
                 f"📈 Setoran Masuk: +{cuan} MOLTZ\n"
                 f"🏦 Total Brankas: {saldo_sekarang} MOLTZ\n\n"
                 f"🔥 Gas terus Bosku!"
